@@ -24,36 +24,37 @@ public class Launch
 
 	public static void main(String[] arg) throws IOException
 	{
-		Launch launch = new Launch();
-
-		launch.parameterPassing(arg);
-
-		Algorithm algorithm = new Algorithm(launch.mode, new Map(launch.upperLeft, launch.lowerRight),
-				launch.quantityK);
-
-		while (true)
-		{
-			Line trueLine = null;
-			if (launch.beforeTruePoint == null)
-			{
-				launch.initialization();
-			}
-			else
-			{
-				launch.nowTruePoint = launch.getNextTruePoint();
-				trueLine = new Line(launch.beforeTruePoint, launch.nowTruePoint);
-				launch.allPoint = algorithm.createDummies(launch.allPoint, trueLine);
-			}
-
-			launch.outputFile(launch.allPoint, trueLine);
-
-			System.out.println("Press any key to next iter");
-			Scanner input = new Scanner(System.in);
-			input.next();
-			input.close();
-
-			launch.beforeTruePoint = launch.nowTruePoint;
-		}
+//		Launch launch = new Launch();
+//
+//		launch.parameterPassing(arg);
+//
+//		Algorithm algorithm = new Algorithm(launch.mode, new Map(launch.upperLeft, launch.lowerRight),
+//				launch.quantityK);
+//
+//		while (true)
+//		{
+//			Line trueLine = null;
+//			if (launch.beforeTruePoint == null)
+//			{
+//				launch.initialization();
+//			}
+//			else
+//			{
+//				launch.nowTruePoint = launch.getNextTruePoint();
+//				trueLine = new Line(launch.beforeTruePoint, launch.nowTruePoint);
+//				launch.allPoint = algorithm.createDummies(launch.allPoint, trueLine);
+//			}
+//
+//			launch.outputFile(launch.allPoint, trueLine);
+//
+//			System.out.println("Press any key to next iter");
+//			Scanner input = new Scanner(System.in);
+//			input.next();
+//			input.close();
+//
+//			launch.beforeTruePoint = launch.nowTruePoint;
+//		}
+		System.out.print("...");
 	}
 
 	private void parameterPassing(String[] arg)
