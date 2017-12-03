@@ -1,6 +1,8 @@
+import check.AngleExaminer;
 import check.CheckAngle;
 import check.CheckDegree;
 import check.CheckTime;
+import check.DegreeExaminer;
 import map.Line;
 import map.Map;
 import map.Point;
@@ -29,8 +31,8 @@ public class Algorithm
 			default:
 				throw new UnsupportedOperationException("This mode not support");
 		}
-		angleExaminer = null; // need implementation
-		degreeExaminer = null; // need implementation
+		angleExaminer = new AngleExaminer(); // need implementation
+		degreeExaminer = new DegreeExaminer(); // need implementation
 	}
 
 	public Point[] createDummies(Point[] nowPoint, Line trueLine)
