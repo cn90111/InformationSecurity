@@ -4,6 +4,6 @@ import map.Line;
 
 public interface CheckAngle
 {
-	public Line[] getReasonableLine(Line[] allLine, Line trueLine);
+	public Line[] getReasonableLine(Line[] allLine, Line trueLine, double thresholdAngle);
 	
 }

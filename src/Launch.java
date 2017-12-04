@@ -17,6 +17,8 @@ public class Launch
 	private Point upperLeft;
 	private Point lowerRight;
 	private int quantityK;
+	private double thresholdTime;
+	private double thresholdAngle;
 
 	private Point[] allPoint = null;
 	private Point beforeTruePoint = null;
@@ -30,22 +32,16 @@ public class Launch
 
 		launch.parameterPassing(arg);
 
-		Algorithm algorithm = new Algorithm(launch.mode, new Map(launch.upperLeft, launch.lowerRight),
-				launch.quantityK);
+		Algorithm algorithm = new Algorithm(launch.mode, new Map(launch.upperLeft, launch.lowerRight), launch.quantityK,
+				launch.thresholdTime, launch.thresholdAngle);
+
+		launch.initialization();
 
 		while (true)
 		{
-			Line trueLine = null;
-			if (launch.beforeTruePoint == null)
-			{
-				launch.initialization();
-			}
-			else
-			{
-				launch.nowTruePoint = launch.getNextTruePoint();
-				trueLine = new Line(launch.beforeTruePoint, launch.nowTruePoint);
-				launch.allPoint = algorithm.createDummies(launch.allPoint, trueLine);
-			}
+			launch.nowTruePoint = launch.getNextTruePoint();
+			Line trueLine = new Line(launch.beforeTruePoint, launch.nowTruePoint);
+			launch.allPoint = algorithm.createDummies(launch.allPoint, trueLine);
 
 			launch.outputFile(launch.allPoint, trueLine);
 
@@ -64,6 +60,8 @@ public class Launch
 		upperLeft = new Point(Double.parseDouble(arg[1]), Double.parseDouble(arg[2]));
 		lowerRight = new Point(Double.parseDouble(arg[3]), Double.parseDouble(arg[4]));
 		quantityK = Integer.parseInt(arg[5]);
+		thresholdTime = Double.parseDouble(arg[6]);
+		thresholdAngle = Double.parseDouble(arg[7]);
 	}
 
 	private void initialization()
