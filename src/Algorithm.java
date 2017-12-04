@@ -1,6 +1,8 @@
+import check.AngleExaminer;
 import check.CheckAngle;
 import check.CheckDegree;
 import check.CheckTime;
+import check.DegreeExaminer;
 import map.Line;
 import map.Map;
 import map.Point;
@@ -8,13 +10,15 @@ import map.RandomPoint;
 
 public class Algorithm
 {
-	RandomPoint randomMaker;
-	CheckTime timeExaminer;
-	CheckAngle angleExaminer;
-	CheckDegree degreeExaminer;
-	int quantityK;
+	private RandomPoint randomMaker;
+	private CheckTime timeExaminer;
+	private CheckAngle angleExaminer;
+	private CheckDegree degreeExaminer;
+	private int quantityK;
+	private double thresholdTime;
+	private double thresholdAngle;
 
-	public Algorithm(int mode, Map map, int quantityK)
+	public Algorithm(int mode, Map map, int quantityK, double thresholdTime, double thresholdAngle)
 	{
 		randomMaker = null; // need implementation
 		randomMaker.loadMap(map);
@@ -29,8 +33,10 @@ public class Algorithm
 			default:
 				throw new UnsupportedOperationException("This mode not support");
 		}
-		angleExaminer = null; // need implementation
-		degreeExaminer = null; // need implementation
+		angleExaminer = new AngleExaminer();
+		degreeExaminer = new DegreeExaminer();
+		this.thresholdTime = thresholdTime;
+		this.thresholdAngle = thresholdAngle;
 	}
 
 	public Point[] createDummies(Point[] nowPoint, Line trueLine)
@@ -40,8 +46,8 @@ public class Algorithm
 		while (candidatesPoint == null || degreeExaminer.isReasonableDegree(allLine, trueLine, quantityK) == false)
 		{
 			candidatesPoint = randomMaker.getCandidatesPoint(trueLine, quantityK);
-			allLine = timeExaminer.getReasonableLine(nowPoint, candidatesPoint);
-			allLine = angleExaminer.getReasonableLine(allLine, trueLine);
+			allLine = timeExaminer.getReasonableLine(nowPoint, candidatesPoint, thresholdTime);
+			allLine = angleExaminer.getReasonableLine(allLine, trueLine, thresholdAngle);
 		}
 		candidatesPoint = decideSol(allLine);
 		return candidatesPoint;
