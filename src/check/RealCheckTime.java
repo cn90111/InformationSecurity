@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import internet.HttpRequest;
@@ -23,7 +24,7 @@ public class RealCheckTime implements CheckTime
 		{
 			trueTime = getTwoPointTime(trueLine.getStart(), trueLine.getEnd());
 		}
-		catch (IOException e)
+		catch (IOException | JSONException e)
 		{
 			e.printStackTrace();
 			System.exit(-1);
@@ -44,7 +45,7 @@ public class RealCheckTime implements CheckTime
 						reasonableLine.add(new Line(nowPoint[i], nextPoint[j]));
 					}
 				}
-				catch (IOException e)
+				catch (IOException | JSONException e)
 				{
 					j = j - 1; // Resend
 					e.printStackTrace();
@@ -55,7 +56,7 @@ public class RealCheckTime implements CheckTime
 		return reasonableLine.toArray(new Line[0]);
 	}
 
-	private double splitTimeFromData(String content)
+	private double splitTimeFromData(String content) throws JSONException
 	{
 		JSONObject jsonObject = new JSONObject(content);
 		double needTime = jsonObject.getJSONArray("rows").getJSONObject(0).getJSONArray("elements").getJSONObject(0)
@@ -63,7 +64,7 @@ public class RealCheckTime implements CheckTime
 		return needTime;
 	}
 
-	private double getTwoPointTime(Point start, Point end) throws IOException
+	private double getTwoPointTime(Point start, Point end) throws IOException, JSONException
 	{
 		URL url = HttpRequest.urlString(start, end);
 		String content = HttpRequest.getRequestContent(url, "GET");
