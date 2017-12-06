@@ -10,4 +10,14 @@ public class Map
 		this.upperLeft = upperLeft;
 		this.lowerRight = lowerRight;
 	}
+	
+	public Point getUpperLeft()
+	{
+		return upperLeft;
+	}
+
+	public Point getLowerRight()
+	{
+		return lowerRight;
+	}
 }

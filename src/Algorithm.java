@@ -1,9 +1,10 @@
+import java.io.IOException;
+
 import check.AngleExaminer;
 import check.CheckAngle;
 import check.CheckDegree;
 import check.CheckTime;
 import check.DegreeExaminer;
-import check.RealCheckTime;
 import map.Line;
 import map.Map;
 import map.Point;
@@ -19,14 +20,14 @@ public class Algorithm
 	private double thresholdTime;
 	private double thresholdAngle;
 
-	public Algorithm(int mode, Map map, int quantityK, double thresholdTime, double thresholdAngle)
+	public Algorithm(int mode, Map map, int quantityK, double thresholdTime, double thresholdAngle) throws IOException
 	{
 		randomMaker = null; // need implementation
 		randomMaker.loadMap(map);
 		switch (mode)
 		{
 			case Launch.REAL_MODE:
-				timeExaminer = new RealCheckTime(); // need implementation
+				timeExaminer = null; // need implementation
 				break;
 			case Launch.VIRTUAL_MODE:
 				timeExaminer = null; // need implementation
@@ -46,8 +47,8 @@ public class Algorithm
 		Line[] allLine = null;
 		while (candidatesPoint == null || degreeExaminer.isReasonableDegree(allLine, trueLine, quantityK) == false)
 		{
-			candidatesPoint = randomMaker.getCandidatesPoint(trueLine, quantityK);
-			allLine = timeExaminer.getReasonableLine(nowPoint, candidatesPoint, trueLine, thresholdTime);
+			candidatesPoint = randomMaker.getCandidatesPoint(trueLine.getEnd(), quantityK ,0);
+			allLine = timeExaminer.getReasonableLine(nowPoint, candidatesPoint, thresholdTime);
 			allLine = angleExaminer.getReasonableLine(allLine, trueLine, thresholdAngle);
 		}
 		candidatesPoint = decideSol(allLine);
