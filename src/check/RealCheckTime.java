@@ -72,9 +72,7 @@ public class RealCheckTime implements CheckTime
 
 	private boolean isLegalTime(double time, double trueTime, double thresholdTime)
 	{
-		double differenceTime = trueTime * thresholdTime;
-
-		if (trueTime - differenceTime <= time && time <= trueTime + differenceTime)
+		if (time - trueTime <= trueTime * thresholdTime)
 		{
 			return true;
 		}
