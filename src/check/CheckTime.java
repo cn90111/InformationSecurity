@@ -5,5 +5,5 @@ import map.Point;
 
 public interface CheckTime
 {
-	public Line[] getReasonableLine(Point[] nowPoint, Point[] nextPoint, double thresholdTime);
+	public Line[] getReasonableLine(Point[] nowPoint, Point[] nextPoint, Line trueLine, double thresholdTime);
 }
