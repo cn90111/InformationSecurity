@@ -3,6 +3,7 @@ import check.CheckAngle;
 import check.CheckDegree;
 import check.CheckTime;
 import check.DegreeExaminer;
+import check.RealCheckTime;
 import map.Line;
 import map.Map;
 import map.Point;
@@ -25,7 +26,7 @@ public class Algorithm
 		switch (mode)
 		{
 			case Launch.REAL_MODE:
-				timeExaminer = null; // need implementation
+				timeExaminer = new RealCheckTime(); // need implementation
 				break;
 			case Launch.VIRTUAL_MODE:
 				timeExaminer = null; // need implementation
@@ -46,7 +47,7 @@ public class Algorithm
 		while (candidatesPoint == null || degreeExaminer.isReasonableDegree(allLine, trueLine, quantityK) == false)
 		{
 			candidatesPoint = randomMaker.getCandidatesPoint(trueLine, quantityK);
-			allLine = timeExaminer.getReasonableLine(nowPoint, candidatesPoint, thresholdTime);
+			allLine = timeExaminer.getReasonableLine(nowPoint, candidatesPoint, trueLine, thresholdTime);
 			allLine = angleExaminer.getReasonableLine(allLine, trueLine, thresholdAngle);
 		}
 		candidatesPoint = decideSol(allLine);
